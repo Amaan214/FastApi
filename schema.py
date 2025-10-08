@@ -16,7 +16,7 @@ class StudentRead(StudentBase):
     # it means if it is empty then return empty list
     courses: List["CourseList"] = []
 
-    class Config:
+    class Config:  # allows reading SQLAlchemy objects as pydantic models
         orm_mode = True
 
 # Teacher

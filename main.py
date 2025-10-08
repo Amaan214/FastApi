@@ -3,7 +3,7 @@ from sqlalchemy.orm import Session
 from app import crud, models, schema
 from app.database import SessionLocal, engine, Base
 
-# create tables (for dev). In production you might use migrations (alembic).
+# This command creates all database tables that are defined in your SQLAlchemy models.
 models.Base.metadata.create_all(bind=engine)
 
 app=FastAPI()
@@ -30,8 +30,8 @@ def create_student(std: schema.StudentCreate, db: Session=Depends(get_db)):
     return crud.create_student(db, std)
 
 @app.get("/students/{student_id}", response_model=schema.StudentRead)
-def read_student(std_id: int, db:Session=Depends(get_db)):
-    student = crud.get_student_by_id(db, std_id)
+def read_student(student_id: int, db:Session=Depends(get_db)):
+    student = crud.get_student_by_id(db, student_id)
     if not student:
         raise HTTPException(status_code=404, detail="No such id exists")
     return student
